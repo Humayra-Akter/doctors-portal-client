@@ -16,7 +16,7 @@ const MyAppointments = () => {
                         fetch(`http://localhost:5000/booking?patient=${user.email}`, {
                                 method: 'GET',
                                 headers: {
-                                        'authorization': `Breare ${localStorage.getItem('accessToken')}`
+                                        authorization: `Bearer ${localStorage.getItem('accessToken')}`
                                 }
                         })
                                 .then(res => {
@@ -25,7 +25,7 @@ const MyAppointments = () => {
                                                 localStorage.removeItem('accessToken');
                                                 navigate('/');
                                         }
-                                        res.json()
+                                        return res.json()
                                 })
                                 .then(data => {
                                         setAppointments(data)
