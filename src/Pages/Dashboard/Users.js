@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import UserRow from './UserRow';
 
 const Users = () => {
-        const { data: users, isLoading } = useQuery('users', () =>
+        const { data: users, isLoading, refetch } = useQuery('users', () =>
                 fetch('http://localhost:5000/user', {
                         method: 'GET',
                         headers: {
@@ -36,6 +36,7 @@ const Users = () => {
                                                         users.map(user => <UserRow
                                                                 key={user._id}
                                                                 user={user}
+                                                                refetch={refetch}
                                                         ></UserRow>)
                                                 }
                                         </tbody>
