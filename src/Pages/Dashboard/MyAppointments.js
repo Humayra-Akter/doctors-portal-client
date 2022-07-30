@@ -7,16 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 
 const MyAppointments = () => {
-        const [user] = useAuthState(auth);
         const [appointments, setAppointments] = useState([]);
+        const [user] = useAuthState(auth);
         const navigate = useNavigate();
 
         useEffect(() => {
                 if (user) {
-                        fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+                        fetch(`https://thawing-ridge-63198.herokuapp.com/booking?patient=${user.email}`, {
                                 method: 'GET',
                                 headers: {
-                                        authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                                        'authorization': `Bearer ${localStorage.getItem('accessToken')}`
                                 }
                         })
                                 .then(res => {
@@ -28,7 +28,7 @@ const MyAppointments = () => {
                                         return res.json()
                                 })
                                 .then(data => {
-                                        setAppointments(data)
+                                        setAppointments(data);
                                 })
                 }
         }, [user]);

@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import React from 'react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import BookingModal from './BookingModal';
@@ -11,7 +10,7 @@ const AvailableAppointments = ({ date }) => {
         const [treatment, setTreatment] = useState(null);
         const formattedDate = format(date, 'PP');
         const { data: services, isLoading, refetch } = useQuery(['available', formattedDate], () =>
-                fetch(`http://localhost:5000/service?date=${formattedDate}`)
+                fetch(`https://thawing-ridge-63198.herokuapp.com/service?date=${formattedDate}`)
                         .then(res => res.json()))
         if (isLoading) {
                 return <Loading></Loading>

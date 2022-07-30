@@ -22,7 +22,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
                         phone: event.target.phone.value
                 }
 
-                fetch('http://localhost:5000/booking', {
+                fetch('https://thawing-ridge-63198.herokuapp.com/booking', {
                         method: 'POST',
                         headers: {
                                 'content-type': 'application/json'
@@ -31,15 +31,15 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
                 })
                         .then(res => res.json())
                         .then(data => {
-                                console.log(data);
+                                console.log(slot);
                                 if (data.success) {
-                                        toast(`Appoinment is set on ${formattedDate} at ${slot}`)
+                                        toast(`Appointment is set on ${formattedDate} at ${booking.slot}`)
                                 }
                                 else {
-                                        toast.error(`Already have an appoinment on ${data.booking.date} at ${data.booking?.slot}`)
+                                        toast.error(`Already have an appointment on ${data.booking?.date} at ${booking.slot}`)
                                 }
-                                refetch();
                                 setTreatment(null);
+                                refetch();
                         })
         }
 
@@ -59,7 +59,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
                                                 onSubmit={handleBooking}
                                                 className='justify-items-center grid grid-cols-1 gap-3 mt-4'>
                                                 <input type="text" disabled value={format(date, 'PP')} className="input input-bordered w-full max-w-xs" />
-                                                <select className="select select-bordered w-full max-w-xs">
+                                                <select name='slot' className="select select-bordered w-full max-w-xs">
                                                         {
                                                                 slots.map((slot, index) =>
                                                                         <option
