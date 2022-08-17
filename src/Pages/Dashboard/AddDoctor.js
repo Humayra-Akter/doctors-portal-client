@@ -1,10 +1,11 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import Loading from '../Shared/Loading';
 
 const AddDoctor = () => {
-        const { register, formState: { errors }, handleSubmit } = useForm();
+        const { register, formState: { errors }, handleSubmit, reset } = useForm();
 
         const imgStorageKey = '81a2b36646ff008b714220192e61707d';
 
@@ -14,7 +15,7 @@ const AddDoctor = () => {
                 const image = data.image[0];
                 const formData = new FormData();
                 formData.append('image', image);
-                const url = `https://api.imgbb.com/1/upload?key=${imgStorageKey}`
+                const url = `https://api.imgbb.com/1/upload?key=${imgStorageKey}`;
                 fetch(url, {
                         method: 'POST',
                         body: formData
@@ -39,7 +40,13 @@ const AddDoctor = () => {
                                         })
                                                 .then(res => res.json())
                                                 .then(inserted => {
-                                                        console.log('doctor', inserted)
+                                                        if (inserted.insertedId) {
+                                                                toast.success('Doctor added successfully');
+                                                                reset();
+                                                        }
+                                                        else {
+                                                                toast.error('Failed to add Doctor')
+                                                        }
                                                 })
                                 }
                         })
@@ -124,7 +131,7 @@ const AddDoctor = () => {
                                                         required: {
                                                                 value: true,
                                                                 message: 'Image is Required'
-                                                        },
+                                                        }
                                                 })}
                                         />
                                         <label className="label">
