@@ -29,8 +29,19 @@ const AddDoctor = () => {
                                                 specialty: data.specialty,
                                                 img: img
                                         }
+                                        fetch('http://localhost:5000/doctor', {
+                                                method: 'POST',
+                                                headers: {
+                                                        'content-type': 'application/json',
+                                                        authorization: `Bearer${localStorage.getItem('accessToken')}`
+                                                },
+                                                body: JSON.stringify(doctor)
+                                        })
+                                                .then(res => res.json())
+                                                .then(inserted => {
+                                                        console.log('doctor', inserted)
+                                                })
                                 }
-                                console.log('imgbb', result);
                         })
         };
 
